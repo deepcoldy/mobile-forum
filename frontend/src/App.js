@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ajax from './service';
+import Category from './component/category';
+import updateCategory from './actions'
 
 class App extends Component {
   state = {
@@ -12,7 +14,7 @@ class App extends Component {
     ajax.get({
       url: '/categories',
       success: (resp) => {
-        this.state.categories = resp
+        dispatch(updateCategory(resp))
       }
     })
     ajax.get({
@@ -31,6 +33,8 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Readable</h1>
         </header>
+
+        <Category name/>
       </div>
     );
   }
