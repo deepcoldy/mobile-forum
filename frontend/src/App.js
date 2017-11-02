@@ -1,43 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Route, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
+
 import './App.css';
-import ajax from './service';
-import Category from './component/category';
-import updateCategory from './actions'
+import AllPost from './AllPost';
+import PostDetail from "./PostDetail";
+
+const mapStateToProps = (state, props) => {
+  return {
+
+  }
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    
+  }
+}
 
 class App extends Component {
-  state = {
-    categories: []
-  }
-
-  componentDidMount() {
-    ajax.get({
-      url: '/categories',
-      success: (resp) => {
-        dispatch(updateCategory(resp))
-      }
-    })
-    ajax.get({
-      url: '/react/posts',
-      success: (resp) => {
-        this.state.categories = resp
-      }
-    })
-  }
   
+  componentDidMount() {
+    
+  }
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Readable</h1>
-        </header>
-
-        <Category name/>
+      <div className="index">
+        <Route exact path="/" render={()=>(
+          <AllPost />
+        )}/>
+        <Route path="/post/:id" render={({match})=>(
+          <PostDetail route={match}/>
+        )}/>
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App));
