@@ -9,3 +9,7 @@
 .category{
   margin: 10px !important;
 }
+
+.like{
+  cursor: pointer;
+}

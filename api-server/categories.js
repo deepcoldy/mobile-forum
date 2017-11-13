@@ -14,8 +14,8 @@ const defaultData = {
         path: 'redux'
       },
       {
-        name: 'udacity',
-        path: 'udacity'
+        name: 'React Native',
+        path: 'React Native'
       }
   ]
 }

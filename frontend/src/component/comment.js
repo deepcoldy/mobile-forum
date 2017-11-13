@@ -18,7 +18,21 @@ const mapdispatchtoprops = (dispatch, ownProps) => {
         id,
         score
       })
-    }
+    },
+    deleteComment: (id) => {
+      dispatch({
+        type: 'DELETE_COMMENT',
+        id
+      })
+    },
+    editComment: (id) => {
+      document.documentElement.scrollTop = document.body.scrollHeight - document.querySelector('form').scrollHeight;
+      dispatch({
+        type: 'FORM_STATUS',
+        status: 'edit_comment',
+        id,
+      })
+    },
   }
 }
 
@@ -30,34 +44,40 @@ class Comment extends Component {
       data: {
         option,
       },
-      success: (resp) => {
-        console.log(resp)
-      }
     })
+  }
+  deleteComment(id) {
+    this.props.deleteComment(id)
+    ajax.delete({
+      url: `/comments/${id}`,
+    })
+  }
+  editComment(id) {
+    this.props.editComment(id)
   }
 
   render() {
     const { id, author, timestamp, title, body, voteScore } = this.props.data;
     const date = moment(timestamp).format('LL');
     return (
-      <div className="ui comments">
+      <div className="ui comments ui feed">
         <div className="comment event">
           <div className="avatar">
-            <i aria-hidden="true" className="user big icon"></i>
+            <i className="user big icon"></i>
           </div>
-          <div className="content">
+          <div className="content" style={{display:'block'}}>
             <a className="author">{author}</a>
             <div className="metadata">
               <div>{ date }</div>
               {
                 voteScore > 0 ? (
-                  <i aria-hidden="true" className="smile icon"></i>
+                  <i className="smile icon"></i>
                 )
                 : voteScore === 0 ? (
-                  <i aria-hidden="true" className="meh icon"></i>
+                  <i className="meh icon"></i>
                 )
                 : (
-                  <i aria-hidden="true" className="frown icon"></i>
+                  <i className="frown icon"></i>
                 )
               }
               <div>{voteScore}</div>
@@ -66,8 +86,7 @@ class Comment extends Component {
               <p>{title}</p>
               <p>{body}</p>
             </div>
-            <div className="actions">
-              {/* <a className="">Reply</a> */}
+            <div className="actions meta">
               <span className="like"  onClick={() => {
                 this.voteComment(id, 'upVote')
               }}>
@@ -76,26 +95,18 @@ class Comment extends Component {
               <span className="like" onClick={() => {
                 this.voteComment(id, 'downVote')
               }}>
-              <i className="thumbs outline down icon"></i>
+                <i className="thumbs outline down icon"></i>
               </span>
+              <span className="like" onClick={() => {
+                this.editComment(id)
+              }}>
+                <i className="edit icon"></i>
+              </span>
+              <i className="trash icon" onClick={() => {
+                this.deleteComment(id)
+              }}></i>
             </div>
           </div>
-          {/* <div className="ui comments">
-            <div className="comment">
-              <div className="avatar">
-              </div>
-              <div className="content">
-                <a className="author">Jenny Hess</a>
-                <div className="metadata">
-                  <div>Just now</div>
-                </div>
-                <div className="text">Elliot you are always so right :)</div>
-                <div className="actions">
-                  <a className="">Reply</a>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
     )

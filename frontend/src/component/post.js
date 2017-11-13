@@ -20,6 +20,20 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         score
       })
     },
+    deletePost: (id) => {
+      dispatch({
+        type: 'DELETE_POST',
+        id
+      })
+    },
+    editPost: (id) => {
+      document.documentElement.scrollTop = document.body.scrollHeight - document.querySelector('form').scrollHeight;
+      dispatch({
+        type: 'FORM_STATUS',
+        status: 'edit_post',
+        id,
+      })
+    }
   }
 }
 
@@ -36,12 +50,18 @@ class PostComponent extends Component {
     this.toggleHover = this.toggleHover.bind(this);
   }
 
-  toggleHover() {
+  toggleHover() { // mouse hover toggle
     if(this.inDetail) return;
     this.setState({hover: !this.state.hover})
   }
 
-  votePost(id, option) {
+  stopTransmit(e) {
+    e.preventDefault();
+    // e.stopPropagation();
+  }
+
+  votePost(id, option) { // option: upVote or downVote
+    
     this.props.votePost(id, option === 'upVote' ? 1 : -1)
     ajax.post({
       url: `/posts/${id}`,
@@ -49,10 +69,19 @@ class PostComponent extends Component {
         option,
       },
       success: (resp) => {
-        console.log(resp)
+        console.log('vote success', resp)
       }
     })
   }
+  deletePost(id) {
+    this.props.deletePost(id)
+    ajax.delete({
+      url: `/posts/${id}`
+    })
+  }
+  // toUrl(id) {
+  //   location.href = `/post/${id}` /* disable-eslint no-restricted-globals */
+  // }
 
   render() {
     const { id, author, timestamp, title, body, voteScore } = this.props.info;
@@ -77,7 +106,7 @@ class PostComponent extends Component {
               <div className="date">{date}</div>
             </div>
             <div className="text extra">{body}</div>
-            <div className="meta">
+            <div className="meta" onClick={this.stopTransmit}>
               <span className="">
                 {
                   voteScore > 0 ? (
@@ -102,22 +131,39 @@ class PostComponent extends Component {
               }}>
                 <i className="thumbs outline down icon"></i>
               </span>
+              {
+                this.inDetail ? (
+                  <span className="like" onClick={() => {
+                    this.props.editPost(id)
+                  }}>
+                    <i aria-hidden="true" className="edit icon"></i>
+                  </span>
+                ) : ''
+              }
+              <span className="like" onClick={() => {
+                this.deletePost(id)
+              }}>
+                <i className="trash icon"></i>
+              </span>
             </div>
           </div>
         </div>
       </div>
     )
 
-    const linkBegin = !this.inDetail ? (
-      <Link to={`/post/${id}`}>
-    ) : ''
-    cosnt linkAfter = !this.inDetail ? (
-      <Link to={`/post/${id}`}>
-    )
-
     return (
       <div style={linkStyle} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
-        { post }
+        {
+          !this.inDetail ? (
+            <Link to={`/post/${id}`}>
+              {post}
+            </Link>
+          ) : ( // post detail page dont show link
+            <div>
+              {post}
+            </div>
+          )
+        }
       </div>
     )
   }

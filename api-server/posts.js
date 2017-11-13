@@ -6,11 +6,21 @@ const defaultData = {
   "8xf0y6ziyjabvozdd253nd": {
     id: '8xf0y6ziyjabvozdd253nd',
     timestamp: 1467166872634,
-    title: 'Udacity is the best place to learn React',
+    title: 'This is the best place to learn React',
     body: 'Everyone says so after all.',
     author: 'thingtwo',
     category: 'react',
     voteScore: 6,
+    deleted: false
+  },
+  "2821jk398dkj393j30dj31": {
+    id: '2821jk398dkj393j30dj31',
+    timestamp: 1510546053000,
+    title: 'Thanks for your time',
+    body: 'Best wishes.',
+    author: 'jack',
+    category: 'React Native',
+    voteScore: 1,
     deleted: false
   },
   "6ni6ok3ym7mf1p33lnez": {

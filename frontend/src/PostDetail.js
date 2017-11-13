@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Post from './component/post';
 import Comment from './component/comment';
+import Form from "./component/form";
 import ajax from './service';
 
 const mapStateToProps = (state, props) => {
@@ -39,6 +40,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         data
       })
     },
+    initFormStatus: () => {
+      dispatch({
+        type: 'FORM_STATUS',
+        status: 'normal',
+        id: '',
+      })
+    },
   }
 }
 
@@ -61,6 +69,7 @@ class PostDetail extends Component {
   }
 
   componentDidMount() {
+    this.props.initFormStatus();
     if(!this.props.post.length){
       ajax.get({
         url: '/posts',
@@ -84,16 +93,16 @@ class PostDetail extends Component {
   }
 
   render() {
-    // const { id, author, timestamp, title, body, voteScore } = this.props.postDetail.length ? 
-    // this.props.postDetail[0]
-    // : {};
-    // const date = moment(timestamp).format('LL');
 
     const CommentList = this.props.comment.length ?
     this.props.comment.map((item, index) => {
       return (
         <Comment data={item} key={`comment${index}`}/>
       )
+    }).filter((item) => {
+      return !item.props.data.deleted
+    }).sort((a, b) => {
+      return b.props.data.voteScore - a.props.data.voteScore
     })
     : ''
 
@@ -109,6 +118,7 @@ class PostDetail extends Component {
         <div className="ui segment active tab">
           {CommentList}
         </div>
+        <Form parentId={this.props.postDetail.length ? this.props.postDetail[0].id : ''}/>
       </div>
     )
   }

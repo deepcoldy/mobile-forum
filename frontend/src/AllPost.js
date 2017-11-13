@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import PostComponent from './component/post';
-import ajax from './service';
+import util from './service';
 
 const mapStateToProps = (state, props) => {
   return {
@@ -67,13 +67,13 @@ class AllPost extends Component {
   }
 
   componentDidMount() {
-    ajax.get({
+    util.get({
       url: '/posts',
       success: (resp) => {
         this.props.getAllPost(resp)
       }
     })
-    ajax.get({
+    util.get({
       url: '/categories',
       success: (resp) => {
         this.props.updateCategory(resp.categories)
@@ -98,19 +98,9 @@ class AllPost extends Component {
     }) 
   }
 
-  getRandomId(len = 22) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789';
-    const maxPos = chars.length;
-    let pwd = '';
-    for (let i=0; i < len; i++) {
-        pwd += chars.charAt(Math.floor(Math.random() * maxPos));
-    }
-    return pwd;
-  }
-
   addPost() {
     const data = {
-      id: this.getRandomId(),
+      id: util.getRandomId(),
       title: this.state.title,
       body: this.state.body,
       author: this.state.author,
@@ -123,7 +113,7 @@ class AllPost extends Component {
       return;
     }
     this.props.addPost(data)
-    ajax.post({
+    util.post({
       url: '/posts',
       data,
       success: (resp) => {
@@ -176,6 +166,7 @@ class AllPost extends Component {
         )
       }).filter((item) => {
         if(item.props.info.category === this.state.tabName || this.state.tabName === 'all'){
+          if (item.props.info.deleted) return false;
           return true;
         }
         return false;
@@ -253,7 +244,7 @@ class AllPost extends Component {
               <div className="ui icon primary left labeled button" role="button" onClick={() => {
                 this.addPost()
               }}>
-                <i aria-hidden="true" className="edit icon"></i>Add Reply
+                <i aria-hidden="true" className="edit icon"></i>Add Post
               </div>
             </form>
           </div>

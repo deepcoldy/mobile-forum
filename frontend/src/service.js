@@ -1,7 +1,7 @@
 export default {
   get: ({
     url,
-    success,
+    success = () => {},
     error,
   }) => {
     return fetch(
@@ -17,11 +17,9 @@ export default {
   },
   post: ({
     url,
-    data,
-    success,
-    error,
+    data = {},
+    success = () => {},
   }) => {
-    console.log(data)
     return fetch(
       url,
       {
@@ -38,4 +36,57 @@ export default {
       success(resp)
     })
   },
+  delete: ({
+    url,
+    data = {},
+    success = () => {},
+    error,
+  }) => {
+    return fetch(
+      url,
+      {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'DeepCold',
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
+      }
+    )
+    .then(res => res.json())
+    .then((resp) => {
+      success(resp)
+    })
+  },
+  put: ({
+    url,
+    data = {},
+    success = () => { },
+    error,
+  }) => {
+    return fetch(
+      url,
+      {
+        method: 'PUT',
+        headers: {
+          'Authorization': 'DeepCold',
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
+      }
+    )
+      .then(res => res.json())
+      .then((resp) => {
+        success(resp)
+      })
+  },
+  getRandomId(len = 22) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789';
+    const maxPos = chars.length;
+    let pwd = '';
+    for (let i = 0; i < len; i++) {
+      pwd += chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return pwd;
+  }
 }
