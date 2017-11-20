@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 
 import PostComponent from './component/post';
 import { updateCategoryAction } from "./actions/category";
@@ -46,7 +47,7 @@ class AllPost extends Component {
       body: '',
       author: '',
       tabBar: {
-        all: 'active',
+        all: '',
       },
       tabBarInit: {
         all: '',
@@ -70,12 +71,18 @@ class AllPost extends Component {
       url: '/categories',
       success: (resp) => {
         this.props.updateCategory(resp.categories)
+        const id = this.props.match.params.post
         if(resp.categories.length > 0){
           resp.categories.map((item, index) => {
-            return this.setState({
+            if (id === item.name) {
+              this.setState({
+                tabName: id
+              })
+            }
+            this.setState({
               tabBar: {
                 ...this.state.tabBar, 
-                [item.name]: ''
+                [item.name]: id === item.name ? 'active' : ''
               },
               tabBarInit: {
                 ...this.state.tabBarInit, 
@@ -88,7 +95,7 @@ class AllPost extends Component {
           })
         }
       }
-    }) 
+    })
   }
 
   addPost() {
@@ -137,6 +144,7 @@ class AllPost extends Component {
   }
 
   changeTabBar(name) {
+    this.props.history.push(`/${name}`)
     this.setState((prevState) => {
       return {
         tabBar: Object.assign(this.state.tabBar,prevState.tabBarInit,{
@@ -155,7 +163,7 @@ class AllPost extends Component {
     if(this.props.post.length > 0){
       allPost = this.props.post.map((item, index) => {
         return (
-          <PostComponent info={item} key={`comment${index}`}/>
+          <PostComponent info={item} key={`comment${index}`} route={this.props.route}/>
         )
       }).filter((item) => {
         if(item.props.info.category === this.state.tabName || this.state.tabName === 'all'){
@@ -251,4 +259,4 @@ class AllPost extends Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AllPost);
+)(withRouter(AllPost));

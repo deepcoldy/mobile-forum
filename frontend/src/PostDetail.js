@@ -102,10 +102,11 @@ class PostDetail extends Component {
       return b.props.data.voteScore - a.props.data.voteScore
     })
     : ''
+    const { params } = this.props.route;
 
     return (
       <div>
-        <Link to="/">
+        <Link to={`/${params.post}`}>
           <i className="arrow left icon" style={{marginBottom: '1em'}}/>
         </Link>
         <div className="ui segment active tab">        

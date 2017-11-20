@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import { connect } from 'react-redux';
 import { editPostStatusAction } from "../actions/form";
@@ -152,9 +152,11 @@ class PostComponent extends Component {
       <div style={linkStyle} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
         {
           !this.inDetail ? (
-            <Link to={`/post/${id}`}>
+            <div onClick={() => {
+              this.props.history.push(`${this.props.route.url}/${id}`)
+            }}>
               {post}
-            </Link>
+            </div>
           ) : ( // post detail page dont show link
             <div>
               {post}
@@ -169,4 +171,4 @@ class PostComponent extends Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps  
-)(PostComponent);
+)(withRouter(PostComponent));

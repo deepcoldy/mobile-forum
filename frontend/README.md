@@ -1,10 +1,12 @@
 ## How to start
 
-1. `npm install`
+1. `cd frontend`
 
-2. `npm start`
+2. `npm install`
 
-3. open [http://localhost:3000](http://localhost:3000) in your broswer.
+3. `npm start`
+
+4. open [http://localhost:3000](http://localhost:3000) in your broswer.
 
 
 ## Contribution
