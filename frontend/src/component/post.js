@@ -3,6 +3,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux';
+import { editPostStatusAction } from "../actions/form";
 import ajax from '../service';
 
 const mapStateToProps = (state, props) => {
@@ -26,13 +27,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         id
       })
     },
-    editPost: (id) => {
+    editPostStatus: (id) => {
       document.documentElement.scrollTop = document.body.scrollHeight - document.querySelector('form').scrollHeight;
-      dispatch({
-        type: 'FORM_STATUS',
-        status: 'edit_post',
-        id,
-      })
+      dispatch(editPostStatusAction(id))
     }
   }
 }
@@ -134,7 +131,7 @@ class PostComponent extends Component {
               {
                 this.inDetail ? (
                   <span className="like" onClick={() => {
-                    this.props.editPost(id)
+                    this.props.editPostStatus(id)
                   }}>
                     <i aria-hidden="true" className="edit icon"></i>
                   </span>

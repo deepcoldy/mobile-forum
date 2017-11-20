@@ -1,8 +1,8 @@
-const UPDATE_ALLPOST = 'UPDATE_ALLPOST';
-const ADD_POST = 'ADD_POST';
-const VOTE_POST = 'VOTE_POST';
-const DELETE_POST = 'DELETE_POST';
-const EDIT_POST = 'EDIT_POST';
+export const UPDATE_ALLPOST = 'UPDATE_ALLPOST';
+export const ADD_POST = 'ADD_POST';
+export const VOTE_POST = 'VOTE_POST';
+export const DELETE_POST = 'DELETE_POST';
+export const EDIT_POST = 'EDIT_POST';
 
 const post = (state = [], action) => {
   switch (action.type) {

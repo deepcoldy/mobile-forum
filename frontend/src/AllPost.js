@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import PostComponent from './component/post';
+import { updateCategoryAction } from "./actions/category";
+import { getAllPostAction, addPostAction } from "./actions/post";
 import util from './service';
 
 const mapStateToProps = (state, props) => {
@@ -14,22 +16,13 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     updateCategory: (data) => {
-      dispatch({
-        type: 'UPDATE_CATEGORY',
-        data
-      })
+      dispatch(updateCategoryAction(data))
     },
     getAllPost: (data) => {
-      dispatch({
-        type: 'UPDATE_ALLPOST',
-        data
-      })
+      dispatch(getAllPostAction(data))
     },
     addPost: (data) => {
-      dispatch({
-        type: 'ADD_POST',
-        data
-      })
+      dispatch(addPostAction(data))
     },
   }
 }

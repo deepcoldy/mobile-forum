@@ -1,7 +1,7 @@
 
 // export const updateCategory = data => {
 //   return {
-//     type: 'UPDATE_CATEGORY',
+//     type: '',
 //     data
 //   }
 // }

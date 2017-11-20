@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 
+import { editCommentStatusAction } from "../actions/form";
+import { voteCommentAction, deleteCommentAction } from "../actions/comment";
 import ajax from '../service';
 
 const mapstatetoprops = (state, ownProps) => {
@@ -13,25 +15,14 @@ const mapstatetoprops = (state, ownProps) => {
 const mapdispatchtoprops = (dispatch, ownProps) => {
   return {
     voteComment: (id, score) => {
-      dispatch({
-        type: 'VOTE_COMMENT',
-        id,
-        score
-      })
+      dispatch(voteCommentAction(id, score))
     },
     deleteComment: (id) => {
-      dispatch({
-        type: 'DELETE_COMMENT',
-        id
-      })
+      dispatch(deleteCommentAction(id))
     },
-    editComment: (id) => {
+    editCommentStatus: (id) => {
       document.documentElement.scrollTop = document.body.scrollHeight - document.querySelector('form').scrollHeight;
-      dispatch({
-        type: 'FORM_STATUS',
-        status: 'edit_comment',
-        id,
-      })
+      dispatch(editCommentStatusAction(id))
     },
   }
 }
@@ -51,9 +42,6 @@ class Comment extends Component {
     ajax.delete({
       url: `/comments/${id}`,
     })
-  }
-  editComment(id) {
-    this.props.editComment(id)
   }
 
   render() {
@@ -98,7 +86,7 @@ class Comment extends Component {
                 <i className="thumbs outline down icon"></i>
               </span>
               <span className="like" onClick={() => {
-                this.editComment(id)
+                this.props.editCommentStatus(id)
               }}>
                 <i className="edit icon"></i>
               </span>

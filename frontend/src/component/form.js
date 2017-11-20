@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { initFormStatusAction } from "../actions/form";
 import util from '../service';
 
 const mapStateToProps = (state, props) => {
@@ -17,13 +18,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch({
         type: 'ADD_COMMENT',
         data
-      })
-    },
-    addCommentStatus: () => {
-      dispatch({
-        type: 'FORM_STATUS',
-        status: 'add_comment',
-        id: '',
       })
     },
     putNewPost: (title, body, id) => {
@@ -43,11 +37,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       })
     },
     initFormStatus: () => {
-      dispatch({
-        type: 'FORM_STATUS',
-        status: 'normal',
-        id: '',
-      })
+      dispatch(initFormStatusAction())
     },
   }
 }
@@ -150,7 +140,6 @@ class AddPost extends Component {
       })
     } else if (nextProps && nextProps.form.id && nextProps.form.status === 'edit_post') {
       const currentPost = nextProps.post.filter((item) => {
-        console.log(item)
         if (item.id === nextProps.form.id) return true;
         return false
       })

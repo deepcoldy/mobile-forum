@@ -1,10 +1,11 @@
 
-const GET_POST_DETAIL = 'GET_POST_DETAIL';
-
-const post = (state = {
+const INITIAL_STATE = {
   title: '',
   content: '',
-}, action) => {
+}
+export const GET_POST_DETAIL = 'GET_POST_DETAIL';
+
+const post = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_POST_DETAIL:
       return action.data

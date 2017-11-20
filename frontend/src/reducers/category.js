@@ -1,4 +1,4 @@
-const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
+export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
 
 const category = (state = [], action) => {
   switch (action.type) {

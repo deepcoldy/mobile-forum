@@ -1,8 +1,8 @@
-const UPDATE_COMMENT = 'UPDATE_COMMENT'
-const VOTE_COMMENT = 'VOTE_COMMENT'
-const ADD_COMMENT = 'ADD_COMMENT'
-const DELETE_COMMENT = 'DELETE_COMMENT'
-const EDIT_COMMENT = 'EDIT_COMMENT'
+export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const VOTE_COMMENT = 'VOTE_COMMENT'
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
 
 const comment = (state = [], action) => {
   switch (action.type) {

@@ -6,6 +6,7 @@ import Post from './component/post';
 import Comment from './component/comment';
 import Form from "./component/form";
 import ajax from './service';
+import { initFormStatusAction } from "./actions/form";
 
 const mapStateToProps = (state, props) => {
   return {
@@ -41,11 +42,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       })
     },
     initFormStatus: () => {
-      dispatch({
-        type: 'FORM_STATUS',
-        status: 'normal',
-        id: '',
-      })
+      dispatch(initFormStatusAction())
     },
   }
 }

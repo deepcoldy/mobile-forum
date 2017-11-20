@@ -1,22 +1,10 @@
 import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom'
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 import './App.css';
 import AllPost from './AllPost';
 import PostDetail from "./PostDetail";
-
-const mapStateToProps = (state, props) => {
-  return {
-
-  }
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    
-  }
-}
 
 class App extends Component {
   
@@ -38,7 +26,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App));
+export default withRouter(App);
