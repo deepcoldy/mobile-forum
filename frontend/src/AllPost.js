@@ -90,6 +90,14 @@ class AllPost extends Component {
               }
             })
           })
+          if (id === 'all') {
+            this.setState({
+              tabBar: {
+                ...this.state.tabBar,
+                all: 'active'
+              }
+            })
+          }
           this.setState({
             category: resp.categories[0].name
           })
