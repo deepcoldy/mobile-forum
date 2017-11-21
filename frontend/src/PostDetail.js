@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import Post from './component/post';
 import Comment from './component/comment';
@@ -59,10 +59,10 @@ class PostDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      sortBy: 'desc',
+      orderBy: 'voteScore',
     }
-
-
+    // this.changeFilter = this.changeFilter.bind(this)
   }
 
   componentDidMount() {
@@ -72,6 +72,14 @@ class PostDetail extends Component {
         url: '/posts',
         success: (resp) => {
           this.props.getAllPost(resp)
+          console.log(this.props)
+          const existId = resp.some((item) => {
+            if(item.id === this.props.match.params.id) return true
+            return false
+          })
+          if (resp.length === 0 || !existId) {
+            this.props.history.replace('/404')
+          }
         }
       })
     }
@@ -89,6 +97,12 @@ class PostDetail extends Component {
     })
   }
 
+  changeFilter(name, event) {
+    this.setState({
+      [name]: event.target.value
+    })
+  }
+
   render() {
 
     const CommentList = this.props.comment.length ?
@@ -99,9 +113,23 @@ class PostDetail extends Component {
     }).filter((item) => {
       return !item.props.data.deleted
     }).sort((a, b) => {
-      return b.props.data.voteScore - a.props.data.voteScore
+      const orderBy = this.state.orderBy
+      const sortBy = this.state.sortBy
+      if (orderBy === 'voteScore') {
+        return sortBy === 'desc' ?
+        b.props.data.voteScore - a.props.data.voteScore
+        : a.props.data.voteScore - b.props.data.voteScore;
+      } else if (orderBy === 'timestamp') {
+        return sortBy === 'desc' ?
+          b.props.data.timestamp - a.props.data.timestamp
+          : a.props.data.timestamp - b.props.data.timestamp;
+      } else {
+        return b.props.data.voteScore - a.props.data.voteScore;
+      }
+      // return b.props.data.voteScore - a.props.data.voteScore
     })
     : ''
+
     const { params } = this.props.route;
 
     return (
@@ -114,6 +142,19 @@ class PostDetail extends Component {
           inDetail={true}/>
         </div>
         <div className="ui segment active tab">
+          <div>
+            Comment Count: {this.props.comment.length}
+          </div>
+          <div style={{marginTop:'10px'}}>
+            Sort way: <select value={this.state.sortBy} onChange={this.changeFilter.bind(this, 'sortBy')} name="sortBy" style={{ marginBottom: '1em', marginRight: '1em' }}>
+              <option value="desc">desc</option>
+              <option value="asc">asc</option>
+            </select>
+            Sort kind: <select value={this.state.orderBy} onChange={this.changeFilter.bind(this, 'orderBy')} name="orderBy">
+              <option value="voteScore">vote score</option>
+              <option value="timestamp">time</option>
+            </select>
+          </div>
           {CommentList}
         </div>
         <Form parentId={this.props.postDetail.length ? this.props.postDetail[0].id : ''}/>
@@ -125,4 +166,4 @@ class PostDetail extends Component {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PostDetail);
+)(withRouter(PostDetail));

@@ -19,9 +19,9 @@ const comment = (state = [], action) => {
     case ADD_COMMENT:
       return [...state, action.data]
     case DELETE_COMMENT:
-      return [...state.map((comment) => {
+      return [...state.filter((comment) => {
         if (comment.id === action.id) {
-          comment.deleted = true
+          return false; // or comment.deleted = true
         }
         return comment
       })]

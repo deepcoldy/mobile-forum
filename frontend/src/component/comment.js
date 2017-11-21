@@ -48,7 +48,7 @@ class Comment extends Component {
     const { id, author, timestamp, title, body, voteScore } = this.props.data;
     const date = moment(timestamp).format('LL');
     return (
-      <div className="ui comments ui feed">
+      <div className="ui comments ui feed" style={{marginTop:'10px'}}>
         <div className="comment event">
           <div className="avatar">
             <i className="user big icon"></i>

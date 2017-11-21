@@ -75,10 +75,8 @@ class PostComponent extends Component {
     ajax.delete({
       url: `/posts/${id}`
     })
+    this.props.history.replace('/')
   }
-  // toUrl(id) {
-  //   location.href = `/post/${id}` /* disable-eslint no-restricted-globals */
-  // }
 
   render() {
     const { id, author, timestamp, title, body, voteScore } = this.props.info;
