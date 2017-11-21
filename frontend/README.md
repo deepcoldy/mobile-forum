@@ -1,12 +1,10 @@
 ## How to start
 
-1. `cd frontend`
+1. `yarn install`
 
-2. `npm install`
+2. `npm start`
 
-3. `npm start`
-
-4. open [http://localhost:3000](http://localhost:3000) in your broswer.
+3. open [http://localhost:3000](http://localhost:3000) in your broswer.
 
 
 ## Contribution
