@@ -116,19 +116,22 @@ class PostComponent extends Component {
                 }
                 vote: {voteScore}
               </span>
-              <span className="like" style={{marginLeft: "2em"}} onClick={() => {
+              <span className="like" style={{marginLeft: "2em"}} onClick={(e) => {
+                e.stopPropagation()
                 this.votePost(id, 'upVote')
               }}>
                 <i className="thumbs outline up icon"></i>
               </span>
-              <span className="like" onClick={() => {
+              <span className="like" onClick={(e) => {
+                e.stopPropagation()
                 this.votePost(id, 'downVote')
               }}>
                 <i className="thumbs outline down icon"></i>
               </span>
               {
                 this.inDetail ? (
-                  <span className="like" onClick={() => {
+                  <span className="like" onClick={(e) => {
+                    e.stopPropagation()
                     this.props.editPostStatus(id)
                   }}>
                     <i aria-hidden="true" className="edit icon"></i>

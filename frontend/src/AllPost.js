@@ -73,7 +73,7 @@ class AllPost extends Component {
         this.props.updateCategory(resp.categories)
         const id = this.props.match.params.post
         if(resp.categories.length > 0){
-          resp.categories.map((item, index) => {
+          resp.categories.forEach((item, index) => {
             if (id === item.name) {
               this.setState({
                 tabName: id
