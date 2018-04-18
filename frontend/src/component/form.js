@@ -158,7 +158,7 @@ class AddPost extends Component {
       })
     }
   }
-
+  
   render() {
     let normalForm = true;
     let editPost = false;
@@ -168,13 +168,17 @@ class AddPost extends Component {
     if (this.props.form.status === 'edit_post') {
       editPost = true;
     }
+
+    function title() {
+      return normalForm ? 'Add a new Comment'
+        : editPost ? 'Edit Post'
+          : 'Edit Comment'
+    }
     
     return (
       <div className="ui segment active tab">
         <h1>{
-          normalForm ? 'Add a new Comment'
-            : editPost ? 'Edit Post'
-            : 'Edit Comment'
+          title()
         }</h1>
         <form className="ui reply form">
           {
