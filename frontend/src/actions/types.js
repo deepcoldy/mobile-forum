@@ -1,0 +1,14 @@
+// category
+export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
+
+export const GET_POST_DETAIL = 'GET_POST_DETAIL'
+
+export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
+
+
+
+export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const VOTE_COMMENT = 'VOTE_COMMENT'
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
